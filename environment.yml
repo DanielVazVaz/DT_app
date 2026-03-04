@@ -1,0 +1,15 @@
+name: my-env-name
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - glpk
+  - pip
+  - pip:
+      - numpy
+      - matplotlib
+      - scipy
+      - sympy
+      - pandas
+      - pyomo
+      - pyvis

@@ -1,8 +1,0 @@
-numpy
-matplotlib
-scipy
-sympy
-pandas
-pyomo
-glpk
-pyvis
