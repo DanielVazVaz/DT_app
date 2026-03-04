@@ -39,8 +39,14 @@ def create_graph_from_results(m, html_folder):
     column_labels = {k: f"{k}\n---\n{product_streams[k]}" for k in product_streams}
     streams_involved = [j for i in feed_streams.values() for j in i] + [j for i in product_streams.values() for j in i]
 
+    # We get the larger streams and the smalles one. This is the one with more letters in streams_involved
+    largest_stream = max(streams_involved, key = lambda x: len(x))
+    
+
     G = pyvis.network.Network(height="600px", width="100%", directed=True, notebook=False)
-    G.add_nodes([i for i in  streams_involved])
+    G.add_nodes([i for i in  streams_involved], 
+                color = ["#7e6e9942" if i==largest_stream else "#bedabfff" if i not in ["A", "B", "C", "D"] else "#86bcd1" for i in streams_involved],
+                shape = ["database" if i==largest_stream else "ellipse" for i in streams_involved])
     G.add_nodes([i for i in column_labels], 
                 label = [column_labels[i] for i in column_labels], 
                 shape = ["box" for i in column_labels], 
