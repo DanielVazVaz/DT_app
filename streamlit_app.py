@@ -38,6 +38,18 @@ with tab1:
     st.markdown("$\log(P^{vap}) = A - \\frac{B}{T + C} + DT + E\log(T) + FT^G \qquad P^{vap}[bar]\quad T[K]$")
     antoine_params_list = "ABCDEFG"
     antoine_df = pd.DataFrame(index = [i for i in abecedary[:n_components_selector]], columns = [i for i in antoine_params_list])
+    default_data =  [[67.2281,	-5420.3,	0,	0,	-8.8253,	9.6171E-6,	2],
+                    [93.1371,	-6995.5,	0,	0,	-12.702,	1.2381E-5,	2],
+                    [76.3161,	-6996.4,	0,	0,	-9.8802,	7.2099E-6,	2],
+                    [84.5711,	-7900.2,	0,	0,	-11.003,	7.1802E-6,	2]]
+
+    antoine_df = pd.DataFrame(index = [i for i in abecedary[:n_components_selector]], columns = [i for i in antoine_params_list])
+    # WE fill the initial data regarding the number of components
+    try:
+        for i in range(n_components_selector):
+            antoine_df.loc[abecedary[i],:] = default_data[i]
+    except IndexError:
+        pass
     antoine_df.index.name = "Chemical"
     st_antoine = st.data_editor(antoine_df, width = 30000, num_rows = "fixed")
     antoine_pvap_df = pd.DataFrame(index = [i for i in abecedary[:n_components_selector]], columns = ["Pvap (25 ºC)"])
@@ -61,6 +73,16 @@ with tab2:
     st.markdown(r"$\Delta H_{vap} = A(1-\frac{T}{T_c})^B \exp(\frac{-CT}{T_c}) \qquad \Delta H_{vap}[kJ/mol]\quad T[K]$")
     dvap_param_list = ["A", "B", "C", "Tc"]
     dvap_df = pd.DataFrame(index = [i for i in abecedary[:n_components_selector]], columns = [i for i in dvap_param_list])
+    default_data = [[37.01,	0.4121,	-0.1238,	469.6],
+                    [43.85,	0.397,	-0.039,	507.4],
+                    [53.66,	0.2831,	0.2831,	540.2],
+                    [58.46,	0.3324,	0.1834,	568.8]]
+        # WE fill the initial data regarding the number of components
+    try:
+        for i in range(n_components_selector):
+            dvap_df.loc[abecedary[i],:] = default_data[i]
+    except IndexError:
+        pass
     dvap_df.index.name = "Chemical"
     st_dvap = st.data_editor(dvap_df, width = 30000, num_rows = "fixed")
     dvap_25_df = pd.DataFrame(index = [i for i in abecedary[:n_components_selector]], columns = ["dHvap (25 ºC)"])
